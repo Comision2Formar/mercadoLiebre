@@ -11,7 +11,7 @@ let storage = multer.diskStorage({
         callback(null,'public/images/products')
     },
     filename:(req,file,callback)=>{
-        callback(null,file.fieldname + Data.now() + path.extname(file.originalname))
+        callback(null,file.fieldname + Date.now() + path.extname(file.originalname))
     }
 })
 
@@ -19,10 +19,13 @@ let upload = multer({storage:storage})
 
 
 router.get('/', controller.listar) //construyo la ruta que me visualizará información de prueba
+router.get('/search',controller.search);
 router.get('/detail/:id',controller.detalle);
 router.get('/add',controller.agregar);
 router.get('/add/form',controller.agregar);
 
 router.post('/add/form',upload.any(),controller.publicar);
+
+router.get('/show/:id',controller.show);
 
 module.exports = router //exporto router

@@ -13,18 +13,6 @@ module.exports = { //exporto un objeto literal con todos los metodos
             ofertas: ofertas,
             visitas: visitas
         })
-    },
-    search:function(req,res){
-        let buscar = req.query.search;
-        let resultados=[];
-        dbProduct.forEach(producto=>{
-            if(producto.name.toLowerCase().includes(buscar.toLowerCase())){
-                resultados.push(producto)
-            }
-        })
-        res.render('productos',{
-            title:"Resultado de la busqueda",
-            productos:resultados
-        })
     }
+ 
 }
