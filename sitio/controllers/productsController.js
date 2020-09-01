@@ -3,7 +3,7 @@ const dbCategories = require('../data/dbCategories');
 
 const fs = require('fs');
 const path = require('path');
-const { resourceUsage } = require('process');
+const { join } = require('path');
 
 module.exports = { //exporto un objeto literal con todos los metodos
     listar: function(req, res) {
@@ -86,7 +86,36 @@ module.exports = { //exporto un objeto literal con todos los metodos
             title: "Ver/Editar Producto",
             producto: resultado[0],
             total: dbProduct.length,
-            categorias:dbCategories
+            categorias:dbCategories,
         })
+    },
+    actualizar:function(req,res){
+        let idProducto = req.params.id;
+        dbProduct.forEach(producto =>{
+            if(producto.id == idProducto){
+                producto.id = Number(req.body.id);
+                producto.name = req.body.name.trim();
+                producto.price = Number(req.body.price);
+                producto.discount = Number(req.body.discount);
+                producto.category = req.body.category.trim();
+                producto.description = req.body.description.trim();
+                producto.image = (req.files[0]?req.files[0].filename:producto.image)
+            }
+        })
+        fs.writeFileSync(path.join(__dirname,'..','data','productsDataBase.json'),JSON.stringify(dbProduct),'utf-8');
+        res.redirect('/products/show/'+ idProducto)
+    },
+    eliminar:function(req,res){
+        let idProducto = req.params.id;
+        let aEliminar;
+        dbProduct.forEach(producto=>{
+            if(producto.id == idProducto){
+                aEliminar = dbProduct.indexOf(producto)
+            }
+        })
+        dbProduct.splice(aEliminar,1)
+        fs.writeFileSync(path.join(__dirname,'..','data','productsDataBase.json'),JSON.stringify(dbProduct));
+        res.redirect('/users/profile')
     }
+
 }

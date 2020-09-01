@@ -6,4 +6,5 @@ const controller = require('../controllers/mainController'); //requiero el contr
 /* GET home page. */
 router.get('/', controller.index);
 
+
 module.exports = router;
