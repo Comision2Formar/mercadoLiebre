@@ -1,2 +1,3 @@
-@import "index.css";
-@import "products.css";
+@import 'header.css';
+@import 'general.css';
+@import 'footer.css';

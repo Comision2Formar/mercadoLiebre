@@ -9,6 +9,7 @@ module.exports = { //exporto un objeto literal con todos los metodos
     listar: function(req, res) {
         res.render('products', {
                 title: "Todos los Productos",
+                css:'index.css',
                 productos: dbProduct
             }) //muestra información de prueba
     },
@@ -22,6 +23,7 @@ module.exports = { //exporto un objeto literal con todos los metodos
         })
         res.render('products',{
             title:"Resultado de la busqueda",
+            css:'index.css',
             productos:resultados
         })
     },
@@ -34,6 +36,7 @@ module.exports = { //exporto un objeto literal con todos los metodos
         console.log(producto)
         res.render('productDetail',{
             title:"Detalle del Producto",
+            css:'products.css',
             producto:producto[0]
         })
     },
@@ -46,6 +49,7 @@ module.exports = { //exporto un objeto literal con todos los metodos
         }
         res.render('productAdd',{
             title:"Agregar Producto",
+            css:'products.css',
             categorias:dbCategories,
             categoria:categoria,
             sub:sub
@@ -84,6 +88,7 @@ module.exports = { //exporto un objeto literal con todos los metodos
         })
         res.render('productShow',{
             title: "Ver/Editar Producto",
+            css:'products.css',
             producto: resultado[0],
             total: dbProduct.length,
             categorias:dbCategories,

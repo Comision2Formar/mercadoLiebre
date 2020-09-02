@@ -10,7 +10,8 @@ const path = require('path');
 module.exports = {
     register:function(req,res){
         res.render('userRegister',{
-            title:"Registro de Usuario"
+            title:"Registro de Usuario",
+            css:'index.css'
         })
     },
     processRegister:function(req,res){
@@ -35,6 +36,7 @@ module.exports = {
         }else{
             res.render('userRegister',{
                 title:"Registro de Usuarios",
+                css:'index.css',
                 errors:errors.mapped(),
                 old:req.body
             })
@@ -43,7 +45,9 @@ module.exports = {
     },
     login:function(req,res){
         res.render('userLogin',{
-            title:"Ingreso de Usuarios"
+            title:"Ingreso de Usuarios",
+            css:'index.css'
+
         })
     },
     processLogin:function(req,res){
@@ -52,6 +56,7 @@ module.exports = {
     profile:function(req,res){
         res.render('userProfile',{
             title:"Perfil de Usuario",
+            css:'index.css',
             productos: dbProducts.filter(producto=>{
                 return producto.category != "visited" && producto.category != "in-sale"
             })
