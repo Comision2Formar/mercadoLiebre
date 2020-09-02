@@ -11,7 +11,9 @@ module.exports = {
     register:function(req,res){
         res.render('userRegister',{
             title:"Registro de Usuario",
-            css:'index.css'
+            css:'index.css',
+            user:req.session.user
+
         })
     },
     processRegister:function(req,res){
@@ -41,22 +43,43 @@ module.exports = {
                 old:req.body
             })
         }
-
     },
     login:function(req,res){
         res.render('userLogin',{
             title:"Ingreso de Usuarios",
-            css:'index.css'
+            css:'index.css',
+            user:req.session.user
+
 
         })
     },
     processLogin:function(req,res){
-
+        let errors = validationResult(req);
+        if(errors.isEmpty()){
+            dbUsers.forEach(usuario=>{
+                if(usuario.email == req.body.email){
+                    req.session.user = usuario
+                }
+            })
+            return res.redirect('/users/profile')
+        }else{
+            return res.render('userLogin',{
+                title:"Ingreso de Usuarios",
+                css:'index.css',
+                errors: errors.mapped(),
+                old:req.body
+            })
+        }
+    },
+    logout:function(req,res){
+        req.session.destroy();
+        res.redirect('/')
     },
     profile:function(req,res){
         res.render('userProfile',{
             title:"Perfil de Usuario",
             css:'index.css',
+            user:req.session.user,
             productos: dbProducts.filter(producto=>{
                 return producto.category != "visited" && producto.category != "in-sale"
             })

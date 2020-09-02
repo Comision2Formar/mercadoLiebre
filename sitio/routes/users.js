@@ -6,12 +6,14 @@ let registerValidator = require('../validators/registerValidator');
 let loginValidator = require('../validators/loginValidator');
 
 
-router.get('/login',controller.login);
-router.post('/login',loginValidator, controller.processLogin);
-
 router.get('/register',controller.register);
 router.post('/register',registerValidator, controller.processRegister);
 
+router.get('/login',controller.login);
+router.post('/login',loginValidator, controller.processLogin);
+
 router.get('/profile', controller.profile);
+
+router.get('/logout',controller.logout);
 
 module.exports = router;
