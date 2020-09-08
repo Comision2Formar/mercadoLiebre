@@ -10,11 +10,15 @@ module.exports = { //exporto un objeto literal con todos los metodos
         res.render('products', {
                 title: "Todos los Productos",
                 css:'index.css',
+                user:req.session.user,
                 productos: dbProduct
             }) //muestra información de prueba
     },
     search:function(req,res){
         let buscar = req.query.search;
+        if(buscar == ""){
+            res.redirect('/')
+        }else{
         let resultados=[];
         dbProduct.forEach(producto=>{
             if(producto.name.toLowerCase().includes(buscar.toLowerCase())){
@@ -24,8 +28,10 @@ module.exports = { //exporto un objeto literal con todos los metodos
         res.render('products',{
             title:"Resultado de la busqueda",
             css:'index.css',
+            user:req.session.user,
             productos:resultados
         })
+    }
     },
 
     detalle:function(req,res){
@@ -37,6 +43,7 @@ module.exports = { //exporto un objeto literal con todos los metodos
         res.render('productDetail',{
             title:"Detalle del Producto",
             css:'products.css',
+            user:req.session.user,
             producto:producto[0]
         })
     },
@@ -50,6 +57,7 @@ module.exports = { //exporto un objeto literal con todos los metodos
         res.render('productAdd',{
             title:"Agregar Producto",
             css:'products.css',
+            user:req.session.user,
             categorias:dbCategories,
             categoria:categoria,
             sub:sub
@@ -89,6 +97,7 @@ module.exports = { //exporto un objeto literal con todos los metodos
         res.render('productShow',{
             title: "Ver/Editar Producto",
             css:'products.css',
+            user:req.session.user,
             producto: resultado[0],
             total: dbProduct.length,
             categorias:dbCategories,

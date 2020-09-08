@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "nombre": "Lucas",
+        "apellido": "Vinotti",
+        "email": "lucas@vinotti.com",
+        "avatar": "avatar1599580298493.jpg",
+        "pass": "$2b$10$Hhv0XM3diGUhWeduHFvQkOmSjZNlCfUWExayR7Tat1akRJMDz1Mo6",
+        "rol": "user"
+    },
+    {
+        "id": 2,
+        "nombre": "Eric",
+        "apellido": "Mena",
+        "email": "menaericdaniel@gmail.com",
+        "avatar": "avatar1599580794645.jpg",
+        "pass": "$2b$10$ocu6ugvVk0CWgV7qN6HcXOaPhNXDtuZjidqB3IzYjWmApjgF3Cne.",
+        "rol": "user"
+    }
+]

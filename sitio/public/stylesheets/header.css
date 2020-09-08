@@ -112,6 +112,12 @@ header nav ul {
     flex-direction: column;
     margin-top: 30px;
 }
+
+header .avatar{
+    border-radius:50%;
+        object-fit: cover;
+    object-position: top;
+}
 /* --- VERSION PARA TABLET --- */
 
 @media(min-width:768px) {

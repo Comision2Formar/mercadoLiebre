@@ -18,7 +18,14 @@ module.exports = {
     },
     processRegister:function(req,res){
         let errors = validationResult(req);
-        lastID = dbUsers.length;
+        let lastID = 0;
+        if(dbUsers.length > 0){
+            dbUsers.forEach(user=>{
+                if(user.id > lastID){
+                    lastID = user.id
+                }
+            })
+        }
 
         if(errors.isEmpty()){
             let nuevoUsuario = {
@@ -26,7 +33,7 @@ module.exports = {
                 nombre:req.body.nombre,
                 apellido:req.body.apellido,
                 email:req.body.email,
-                ciudad:req.body.ciudad!=""?req.body.ciudad:"sin especificar",
+                avatar:(req.files[0])?req.files[0].filename:"default.png",
                 pass:bcrypt.hashSync(req.body.pass,10),
                 rol:"user"
             }
@@ -58,27 +65,42 @@ module.exports = {
         if(errors.isEmpty()){
             dbUsers.forEach(usuario=>{
                 if(usuario.email == req.body.email){
-                    req.session.user = usuario
+                    req.session.user = {
+                        id:usuario.id,
+                        nick:usuario.nombre + ' ' + usuario.apellido,
+                        rol:usuario.rol,
+                        email:usuario.email,
+                        avatar:usuario.avatar
+                    }
                 }
             })
-            return res.redirect('/users/profile')
+            if(req.body.recordar){
+                res.cookie('userMercadoLiebre',req.session.user,{maxAge:1000*60*2})
+            }
+            return res.redirect('/')
         }else{
             return res.render('userLogin',{
                 title:"Ingreso de Usuarios",
                 css:'index.css',
                 errors: errors.mapped(),
-                old:req.body
+                old:req.body,
+                user:req.session.user
+
             })
         }
     },
     logout:function(req,res){
         req.session.destroy();
+        if(req.cookies.userMercadoLiebre){
+            res.cookie('userMercadoLiebre','',{maxAge:-1})
+        }
         res.redirect('/')
     },
     profile:function(req,res){
         res.render('userProfile',{
             title:"Perfil de Usuario",
             css:'index.css',
+            user:req.session.user,
             user:req.session.user,
             productos: dbProducts.filter(producto=>{
                 return producto.category != "visited" && producto.category != "in-sale"
