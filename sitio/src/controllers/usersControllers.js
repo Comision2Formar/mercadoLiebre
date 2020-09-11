@@ -47,7 +47,8 @@ module.exports = {
                 title:"Registro de Usuarios",
                 css:'index.css',
                 errors:errors.mapped(),
-                old:req.body
+                old:req.body,
+                user:req.session.user
             })
         }
     },
